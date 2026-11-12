@@ -1,0 +1,253 @@
+{
+  "id": "caso1",
+  "titulo": "El Caso del Sr. Valdés",
+  "subtitulo": "Misterio en la Mansión Valdés",
+  "descripcion": "El acaudalado empresario D. Héctor Valdés ha sido hallado sin vida en su mansión durante una noche de tormenta. Como inspector a cargo, dispones de exactamente 30 segundos por sala para observar la escena y registrar cada objeto antes de que la policía científica clausure las habitaciones.",
+  "tiempoPorSala": 30,
+  "salas": [
+    {
+      "id": "estudio",
+      "nombre": "Estudio del Sr. Valdés",
+      "icono": "📚",
+      "descripcion": "El despacho privado donde fue hallado el Sr. Valdés. Huele a tabaco antiguo y té recién servido.",
+      "objetos": [
+        {
+          "id": "reloj_roto",
+          "nombre": "Reloj de pared detenido a las 22:15",
+          "emoji": "🕙",
+          "imagen": "assets/objetos/reloj_roto.png",
+          "x": 18,
+          "y": 22
+        },
+        {
+          "id": "ventana_cerrada",
+          "nombre": "Ventana cerrada con pestillo por dentro",
+          "emoji": "🪟",
+          "imagen": "assets/objetos/ventana_cerrada.png",
+          "x": 78,
+          "y": 24
+        },
+        {
+          "id": "caja_fuerte",
+          "nombre": "Caja fuerte entreabierta y vacía",
+          "emoji": "🔓",
+          "imagen": "assets/objetos/caja_fuerte.png",
+          "x": 15,
+          "y": 58
+        },
+        {
+          "id": "taza_te",
+          "nombre": "Taza de té con olor a almendras amargas",
+          "emoji": "🍵",
+          "imagen": "assets/objetos/taza_te.png",
+          "x": 46,
+          "y": 56
+        },
+        {
+          "id": "testamento",
+          "nombre": "Nuevo testamento sin firmar sobre el escritorio",
+          "emoji": "📜",
+          "imagen": "assets/objetos/testamento.png",
+          "x": 62,
+          "y": 52
+        },
+        {
+          "id": "cenicero_puro",
+          "nombre": "Cenicero con un habano a medio fumar",
+          "emoji": "🚬",
+          "imagen": "assets/objetos/cenicero_puro.png",
+          "x": 34,
+          "y": 64
+        },
+        {
+          "id": "alfombra_manchada",
+          "nombre": "Alfombra persa con manchas de barro recientes",
+          "emoji": "🧶",
+          "imagen": "assets/objetos/alfombra_manchada.png",
+          "x": 52,
+          "y": 82
+        }
+      ]
+    },
+    {
+      "id": "vestibulo",
+      "nombre": "Vestíbulo Principal",
+      "icono": "🏛️",
+      "descripcion": "La entrada principal de la mansión. Conduce directamente a la puerta exterior y a la escalera imperial.",
+      "objetos": [
+        {
+          "id": "paraguas_mojado",
+          "nombre": "Paraguas negro goteando agua en el paragüero",
+          "emoji": "☂️",
+          "imagen": "assets/objetos/paraguas_mojado.png",
+          "x": 20,
+          "y": 68
+        },
+        {
+          "id": "abrigo_seco",
+          "nombre": "Abrigo de la hija completamente seco en el perchero",
+          "emoji": "🧥",
+          "imagen": "assets/objetos/abrigo_seco.png",
+          "x": 82,
+          "y": 38
+        },
+        {
+          "id": "libro_visitas",
+          "nombre": "Libro de visitas con firma del socio a las 21:50",
+          "emoji": "📖",
+          "imagen": "assets/objetos/libro_visitas.png",
+          "x": 35,
+          "y": 52
+        },
+        {
+          "id": "telefono_cortado",
+          "nombre": "Teléfono fijo con el cable cortado con tijeras",
+          "emoji": "☎️",
+          "imagen": "assets/objetos/telefono_cortado.png",
+          "x": 68,
+          "y": 48
+        },
+        {
+          "id": "huellas_barro",
+          "nombre": "Huellas de zapatos con barro rumbo al estudio",
+          "emoji": "👞",
+          "imagen": "assets/objetos/huellas_barro.png",
+          "x": 48,
+          "y": 80
+        },
+        {
+          "id": "llave_maestra",
+          "nombre": "Llave maestra caída junto a la maceta",
+          "emoji": "🗝️",
+          "imagen": "assets/objetos/llave_maestra.png",
+          "x": 74,
+          "y": 76
+        }
+      ]
+    }
+  ],
+  "sospechosos": [
+    {
+      "id": "mayordomo",
+      "nombre": "Ramiro Montes (Mayordomo)",
+      "rol": "Mayordomo jefe de la mansión",
+      "emoji": "🤵",
+      "declaraciones": [
+        {
+          "id": "dec_mayordomo_1",
+          "texto": "A las 22:00 le serví al señor una infusión de manzanilla pura sin ningún aroma extraño.",
+          "objetoContradice": "taza_te",
+          "explicacion": "En el escritorio del estudio había una taza de té con un intenso olor a almendras amargas (cianuro), no manzanilla pura."
+        },
+        {
+          "id": "dec_mayordomo_2",
+          "texto": "Antes de retirarme comprobé que la ventana del estudio estaba abierta de par en par para ventilar.",
+          "objetoContradice": "ventana_cerrada",
+          "explicacion": "La ventana del estudio se encontraba completamente cerrada y asegurada con el pestillo por dentro."
+        },
+        {
+          "id": "dec_mayordomo_3",
+          "texto": "He trabajado en esta casa durante más de veinte años sin una sola queja del Sr. Valdés.",
+          "objetoContradice": null,
+          "explicacion": "Esta afirmación es coherente; ningún objeto de la mansión contradice su antigüedad en el servicio."
+        }
+      ]
+    },
+    {
+      "id": "hija",
+      "nombre": "Elena Valdés (Hija)",
+      "rol": "Hija única y heredera legítima",
+      "emoji": "👩",
+      "declaraciones": [
+        {
+          "id": "dec_hija_1",
+          "texto": "Acababa de entrar de la calle bajo el diluvio con mi abrigo puesto cuando escuché el alboroto.",
+          "objetoContradice": "abrigo_seco",
+          "explicacion": "El abrigo de la hija colgado en el perchero del vestíbulo estaba completamente seco pese a la tormenta exterior."
+        },
+        {
+          "id": "dec_hija_2",
+          "texto": "Mi padre estaba muy satisfecho con su viejo testamento y jamás pensó en redactar uno nuevo.",
+          "objetoContradice": "testamento",
+          "explicacion": "Sobre el escritorio del estudio reposaba un nuevo testamento recién redactado y aún sin firmar."
+        },
+        {
+          "id": "dec_hija_3",
+          "texto": "Sabía que mi padre guardaba documentos importantes en su despacho privado.",
+          "objetoContradice": null,
+          "explicacion": "Declaración coherente; es normal que conociera la existencia del despacho y no contradice ninguna pista física."
+        }
+      ]
+    },
+    {
+      "id": "socio",
+      "nombre": "Arturo Mendoza (Socio)",
+      "rol": "Socio de negocios de Inversiones Valdés",
+      "emoji": "🕵️‍♂️",
+      "declaraciones": [
+        {
+          "id": "dec_socio_1",
+          "texto": "Solo pasé a saludar por la tarde y me marché antes de las 20:30 sin anotarme en el libro de entradas.",
+          "objetoContradice": "libro_visitas",
+          "explicacion": "El libro de visitas del vestíbulo registra claramente la firma del socio a las 21:50, poco antes del crimen."
+        },
+        {
+          "id": "dec_socio_2",
+          "texto": "En cuanto nos enteramos de la tragedia, llamé a la policía desde el teléfono fijo del vestíbulo.",
+          "objetoContradice": "telefono_cortado",
+          "explicacion": "Era imposible llamar desde el teléfono fijo del vestíbulo porque tenía el cable cortado con tijeras."
+        },
+        {
+          "id": "dec_socio_3",
+          "texto": "Tenía una reunión financiera programada con Héctor para el próximo lunes por la mañana.",
+          "objetoContradice": null,
+          "explicacion": "Declaración coherente; ningún objeto de las dos salas contradice su agenda de la próxima semana."
+        }
+      ]
+    }
+  ],
+  "senuelos": [
+    {
+      "id": "senuelo_revolver",
+      "nombre": "Revólver de plata sobre la chimenea",
+      "emoji": "🔫",
+      "imagen": "assets/objetos/senuelo_revolver.png"
+    },
+    {
+      "id": "senuelo_copa_vino",
+      "nombre": "Copa de vino tinto derramada en el suelo",
+      "emoji": "🍷",
+      "imagen": "assets/objetos/senuelo_copa_vino.png"
+    },
+    {
+      "id": "senuelo_carta_chantaje",
+      "nombre": "Carta anónima de chantaje rota en pedazos",
+      "emoji": "✉️",
+      "imagen": "assets/objetos/senuelo_carta_chantaje.png"
+    },
+    {
+      "id": "senuelo_candelabro",
+      "nombre": "Candelabro de bronce abollado en la entrada",
+      "emoji": "🕯️",
+      "imagen": "assets/objetos/senuelo_candelabro.png"
+    },
+    {
+      "id": "senuelo_guantes",
+      "nombre": "Guantes de cuero negro junto a la escalera",
+      "emoji": "🧤",
+      "imagen": "assets/objetos/senuelo_guantes.png"
+    },
+    {
+      "id": "senuelo_frasco",
+      "nombre": "Frasco vacío de somníferos sobre el sillón",
+      "emoji": "💊",
+      "imagen": "assets/objetos/senuelo_frasco.png"
+    }
+  ],
+  "culpable": "socio",
+  "puntos": {
+    "deduccionCorrecta": 10,
+    "acusacionCorrecta": 30
+  },
+  "solucion": "Arturo Mendoza (el Socio) llegó bajo la lluvia a las 21:50 (dejando su paraguas mojado, su firma en el libro de visitas y sus huellas de barro rumbo al estudio). Tras discutir con el Sr. Valdés por un desfalco financiero, vertió veneno con olor a almendras amargas en la taza de té a las 22:15, vació la caja fuerte usando la llave maestra que dejó caer al huir y cortó el cable del teléfono fijo del vestíbulo para retrasar el aviso a la policía."
+}

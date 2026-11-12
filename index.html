@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Testigo Perfecto — El Caso del Sr. Valdés</title>
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" href="css/estilo.css" />
+</head>
+<body>
+
+  <!-- =========================================================
+       CABECERA PRINCIPAL DEL JUEGO
+       ========================================================= -->
+  <header class="cabecera">
+    <div class="cabecera__marca">
+      <span class="cabecera__icono" aria-hidden="true">🕵️‍♂️</span>
+      <div>
+        <h1 class="cabecera__titulo">El Testigo Perfecto</h1>
+        <p class="cabecera__subtitulo" id="subtitulo-caso">Cargando expediente...</p>
+      </div>
+    </div>
+
+    <div class="cabecera__estado">
+      <button id="btn-abrir-ayuda" class="boton boton--ayuda" type="button" aria-haspopup="dialog" aria-controls="modal-ayuda">
+        ❓ ¿Cómo se juega?
+      </button>
+      <span class="insignia-fase" id="insignia-fase-actual">🔍 Fase de Observación</span>
+      <span class="contador-salas" id="estado-salas-global">Salas inspeccionadas: 0 / 2</span>
+      <span class="contador-salas marcador-puntos" id="marcador-puntos">🏆 Puntos: 0</span>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       CONTENEDOR PRINCIPAL DEL JUEGO
+       ========================================================= -->
+  <main class="contenedor-principal">
+
+    <!-- 0. PANTALLA DE SELECCIÓN DE CASOS (INICIO) -->
+    <section id="pantalla-casos" class="panel-pantalla activa" aria-labelledby="titulo-seleccion-casos">
+      <div class="tarjeta-expediente">
+        <div class="sello-confidencial">ARCHIVOS DE LA AGENCIA</div>
+        <h2 id="titulo-seleccion-casos" class="expediente__titulo">🗂️ Selección de Casos</h2>
+        <p class="expediente__descripcion">
+          Elige un expediente abierto para iniciar las pesquisas. Cada caso guarda su propio récord histórico de puntuación.
+        </p>
+
+        <div id="contenedor-tarjetas-casos" class="casos-grid">
+          <!-- Tarjetas generadas dinámicamente desde data/casos.json -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. PANTALLA DE INTRODUCCIÓN AL CASO ELEGIDO -->
+    <section id="pantalla-inicio" class="panel-pantalla" aria-labelledby="titulo-expediente">
+      <div class="tarjeta-expediente">
+        <div class="sello-confidencial">CONFIDENCIAL</div>
+        <h2 id="titulo-expediente" class="expediente__titulo">El Caso del Sr. Valdés</h2>
+        <p id="descripcion-expediente" class="expediente__descripcion">
+          Cargando datos del caso...
+        </p>
+
+        <div class="reglas-observacion">
+          <h3>📋 Reglas de la Investigación</h3>
+          <ul>
+            <li><strong>1. Fase de Observación (30s por sala):</strong> Inspecciona cada sala haciendo clic en los objetos para ver su nombre. Al agotarse el tiempo, la sala se cierra para siempre.</li>
+            <li><strong>2. Libreta de Repaso (Máx. 3 usos):</strong> Durante los interrogatorios puedes usar tu libreta para reexaminar una sala durante 10 segundos en solo lectura. Cuidado: cada uso resta 5 puntos.</li>
+            <li><strong>3. Fase de Declaraciones y Deducción (De memoria):</strong> Escucharás una por una las declaraciones de los 3 sospechosos. <strong>Tu libreta estará oculta</strong> y deberás recordar qué objeto contradice cada frase (o si es coherente).</li>
+            <li><strong>4. Fase de Acusación:</strong> Tras evaluar todos los testimonios, señala al verdadero culpable para aspirar al rango de <em>Mente Maestra</em>.</li>
+          </ul>
+        </div>
+
+        <div id="contenedor-record-inicio" class="caja-record-inicio">
+          <span class="icono-trofeo">🏆</span>
+          <span id="texto-record-inicio">Mejor récord en este caso: Sin partidas registradas</span>
+        </div>
+
+        <div class="acciones-centro acciones-dobles">
+          <button id="btn-volver-casos-inicio" class="boton boton--secundario" type="button">
+            📁 Volver a los casos
+          </button>
+          <button id="btn-iniciar-observacion" class="boton boton--primario" type="button">
+            🔎 Comenzar investigación
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PANTALLA DE FASE DE OBSERVACIÓN (SALAS 2D + TEMPORIZADOR) -->
+    <section id="pantalla-observacion" class="panel-pantalla" aria-label="Escenario de Observación">
+
+      <!-- Barra superior: Selector de salas y cronómetro de 30 segundos -->
+      <div class="barra-control-observacion">
+        <div id="selector-salas" class="selector-salas" role="group" aria-label="Salas de la mansión">
+          <!-- Los botones de Estudio y Vestíbulo se generan dinámicamente desde caso.json -->
+        </div>
+
+        <div class="caja-temporizador" id="caja-temporizador" aria-live="polite">
+          <div class="temporizador__cabecera">
+            <span class="temporizador__etiqueta">⏱️ Tiempo restante en sala:</span>
+            <span id="tiempo-restante" class="temporizador__numero">30s</span>
+          </div>
+          <div class="barra-tiempo" role="progressbar" aria-valuemin="0" aria-valuemax="30" aria-valuenow="30">
+            <div id="barra-tiempo-relleno" class="barra-tiempo__relleno"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disposición en 2 columnas: Escenario 2D a la izquierda y Libreta a la derecha -->
+      <div class="disposicion-juego">
+
+        <!-- Columna izquierda: Escenario gráfico 2D de la sala -->
+        <div class="columna-escenario">
+          <div id="escenario-2d" class="escenario-2d" data-sala="ninguna">
+
+            <!-- Decorado arquitectónico 2D de fondo (pared, zócalo, suelo) -->
+            <div class="decorado-2d" aria-hidden="true">
+              <div class="decorado-2d__pared"></div>
+              <div class="decorado-2d__zocalo"></div>
+              <div class="decorado-2d__suelo"></div>
+              <!-- Etiqueta ambiental de la habitación -->
+              <div id="decorado-nombre-sala" class="decorado-2d__rotulo">Selecciona una sala</div>
+            </div>
+
+            <!-- Contenedor donde se posicionan los objetos clicables (x%, y%) -->
+            <div id="capa-objetos" class="capa-objetos"></div>
+
+            <!-- Velo superpuesto cuando aún no se ha abierto una sala o cuando se clausura -->
+            <div id="velo-escenario" class="velo-escenario activo">
+              <div class="velo-escenario__contenido">
+                <span id="velo-icono" class="velo-escenario__icono">🚪</span>
+                <h3 id="velo-titulo" class="velo-escenario__titulo">Selecciona una sala para iniciar</h3>
+                <p id="velo-mensaje" class="velo-escenario__mensaje">
+                  Elige el <strong>Estudio</strong> o el <strong>Vestíbulo</strong> en el panel superior. Recuerda: tendrás exactamente 30 segundos antes de que se cierre para siempre.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Visor inferior del objeto clicado actualmente -->
+          <div id="visor-objeto" class="visor-objeto" aria-live="assertive">
+            <span class="visor-objeto__etiqueta">Pista seleccionada:</span>
+            <span id="visor-objeto-texto" class="visor-objeto__nombre">
+              Haz clic en cualquier objeto de la sala para ver su nombre...
+            </span>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Cuaderno de notas del detective -->
+        <aside class="panel-libreta" aria-labelledby="titulo-libreta">
+          <h2 id="titulo-libreta" class="panel-libreta__titulo">📓 Libreta del Detective</h2>
+          <p id="descripcion-sala-actual" class="panel-libreta__descripcion">
+            Entra en una sala para examinar sus objetos.
+          </p>
+
+          <div class="progreso-pistas">
+            <span>Objetos descubiertos en esta sala:</span>
+            <strong id="contador-objetos-sala">0 / 0</strong>
+          </div>
+
+          <ul id="lista-objetos-descubiertos" class="lista-pistas">
+            <li class="lista-pistas__vacio">Aún no has inspeccionado ningún objeto en esta sala.</li>
+          </ul>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- 3. PANTALLA DE FASE DE DECLARACIONES Y DEDUCCIÓN -->
+    <section id="pantalla-declaraciones" class="panel-pantalla" aria-labelledby="titulo-declaraciones">
+      <div class="disposicion-juego">
+
+        <!-- Columna izquierda: Interrogatorio y opciones de deducción -->
+        <div class="tarjeta-interrogatorio">
+          <div class="interrogatorio__progreso">
+            <span id="progreso-declaracion-texto" class="progreso-declaracion__texto">Declaración 1 de 9</span>
+            <div class="barra-progreso-declaraciones" role="progressbar" aria-valuemin="1" aria-valuemax="9" aria-valuenow="1">
+              <div id="barra-progreso-declaraciones-relleno" class="barra-progreso-declaraciones__relleno"></div>
+            </div>
+          </div>
+
+          <!-- Ficha del sospechoso que declara -->
+          <div class="ficha-declarante">
+            <span id="dec-sospechoso-emoji" class="ficha-declarante__emoji" aria-hidden="true">🤵</span>
+            <div>
+              <h2 id="titulo-declaraciones" class="ficha-declarante__nombre">Nombre del Sospechoso</h2>
+              <p id="dec-sospechoso-rol" class="ficha-declarante__rol">Rol en la mansión</p>
+            </div>
+          </div>
+
+          <!-- Cita / Frase declarada -->
+          <blockquote id="dec-frase" class="cita-declaracion">
+            "Texto de la declaración del sospechoso..."
+          </blockquote>
+
+          <!-- Pregunta de deducción y botones de opciones mezcladas -->
+          <div class="bloque-deduccion">
+            <h3 class="bloque-deduccion__pregunta">
+              🤔 ¿Qué objeto de la escena contradice esta declaración?
+            </h3>
+            <p class="bloque-deduccion__instruccion">
+              Recuerda de memoria lo que viste en las salas. ¡Cuidado con los objetos señuelo que nunca estuvieron allí!
+            </p>
+            <div id="contenedor-opciones-deduccion" class="opciones-deduccion" role="group" aria-label="Opciones de deducción">
+              <!-- Opciones generadas y mezcladas al azar por juego.js -->
+            </div>
+          </div>
+
+          <!-- Retroalimentación inmediata tras responder (oculta hasta elegir opción) -->
+          <div id="caja-retroalimentacion" class="caja-retroalimentacion oculta" aria-live="polite">
+            <div id="retro-titulo" class="retro__titulo"></div>
+            <p id="retro-explicacion" class="retro__explicacion"></p>
+            <div class="retro__acciones">
+              <button id="btn-siguiente-declaracion" class="boton boton--primario" type="button">
+                Siguiente declaración ➡️
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Libreta cerrada (NO muestra la lista de objetos para exigir memoria) -->
+        <aside class="panel-libreta panel-libreta--sellada" aria-label="Estado de la libreta en interrogatorio">
+          <h2 class="panel-libreta__titulo">📓 Libreta del Detective</h2>
+          <div class="aviso-memoria">
+            <span class="aviso-memoria__icono" aria-hidden="true">🔒</span>
+            <h3 class="aviso-memoria__titulo">Reto de Memoria Activo</h3>
+            <p class="aviso-memoria__texto">
+              Durante los interrogatorios, la lista de objetos descubiertos permanece <strong>oculta</strong> para poner a prueba tu memoria.
+            </p>
+          </div>
+
+          <!-- Módulo de Repaso de Libreta (Sprint 3) -->
+          <div class="modulo-repaso-libreta">
+            <button id="btn-abrir-repaso" class="boton boton--repaso" type="button">
+              📓 Libreta de Repaso
+            </button>
+            <div class="contador-repaso-caja">
+              <span id="contador-usos-repaso" class="contador-repaso-texto">Usos restantes: 3 / 3</span>
+              <small class="costo-repaso-texto">⚠️ Cada uso resta 5 puntos del puntaje final</small>
+            </div>
+            <p class="texto-micro-repaso">
+              Permite reexaminar una sala durante <strong>10 segundos</strong> en solo lectura (sin poder interactuar).
+            </p>
+          </div>
+
+          <div class="resumen-interrogatorio-lateral">
+            <div class="dato-lateral">
+              <span>Deducciones acertadas:</span>
+              <strong id="contador-aciertos-deduccion">0 / 0</strong>
+            </div>
+            <div class="dato-lateral">
+              <span>Puntaje acumulado:</span>
+              <strong id="puntaje-lateral-interrogatorio">0 pts</strong>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- 4. PANTALLA DE FASE DE ACUSACIÓN -->
+    <section id="pantalla-acusacion" class="panel-pantalla" aria-labelledby="titulo-acusacion">
+      <div class="tarjeta-expediente">
+        <div class="sello-confidencial">FASE DECISIVA</div>
+        <h2 id="titulo-acusacion" class="expediente__titulo">⚖️ Fase de Acusación Final</h2>
+        <p class="expediente__descripcion">
+          Has escuchado y contrastado de memoria las declaraciones de los 3 sospechosos. Basándote en las contradicciones halladas y en las pistas de la escena del crimen, <strong>¿quién es el culpable del asesinato del Sr. Valdés?</strong>
+        </p>
+
+        <div id="contenedor-tarjetas-acusacion" class="sospechosos-grid acusacion-grid">
+          <!-- Se generan dinámicamente las 3 tarjetas de sospechosos con su botón de acusar -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PANTALLA FINAL: VEREDICTO, PUNTAJE Y SOLUCIÓN DEL CASO -->
+    <section id="pantalla-resumen" class="panel-pantalla" aria-labelledby="titulo-resumen">
+      <div class="tarjeta-expediente">
+        <div id="sello-veredicto-final" class="sello-confidencial sello-confidencial--completado">CASO CERRADO</div>
+        <h2 id="titulo-resumen" class="expediente__titulo">Veredicto del Caso</h2>
+        <p id="mensaje-veredicto-final" class="expediente__descripcion">
+          Resultado de tu investigación...
+        </p>
+
+        <!-- Bloque de Rango del Detective (Sprint 3) -->
+        <div class="tarjeta-rango" id="tarjeta-rango">
+          <span class="tarjeta-rango__insignia" id="rango-insignia">🎖️</span>
+          <div class="tarjeta-rango__cuerpo">
+            <span class="tarjeta-rango__subtitulo">Rango Obtenido</span>
+            <h3 id="rango-titulo" class="tarjeta-rango__titulo">Mente Maestra</h3>
+            <p id="rango-descripcion" class="tarjeta-rango__descripcion"></p>
+          </div>
+        </div>
+
+        <!-- Marcador de puntaje final y desglose con libreta y récord -->
+        <div class="panel-puntaje-final">
+          <div class="puntaje-final__total">
+            <span class="puntaje-final__etiqueta">Puntaje Total Obtenido</span>
+            <strong id="puntaje-total-valor" class="puntaje-final__numero">0 pts</strong>
+            <div id="contenedor-record-final" class="record-final-destacado">
+              <span class="icono-record">🏆</span>
+              <span id="texto-record-final">Récord histórico: 0 pts</span>
+            </div>
+          </div>
+          <div id="desglose-puntaje-final" class="puntaje-final__desglose">
+            <!-- Desglose dinámico: puntos por deducciones + puntos por acusación - descuento por libreta -->
+          </div>
+        </div>
+
+        <!-- Resumen de la solución oficial del caso -->
+        <div class="caja-solucion-caso">
+          <h3 id="titulo-solucion-caso">🔎 Solución del Caso</h3>
+          <p id="texto-solucion-caso"></p>
+        </div>
+
+        <div class="acciones-centro acciones-dobles">
+          <button id="btn-volver-casos-final" class="boton boton--secundario" type="button">
+            📁 Volver a los casos
+          </button>
+          <button id="btn-reiniciar-observacion" class="boton boton--primario" type="button">
+            🔄 Jugar de nuevo
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       MODAL 1: LIBRETA DE REPASO (10 SEGUNDOS - SOLO LECTURA)
+       ========================================================= -->
+  <div id="modal-repaso" class="modal-superpuesto oculta" role="dialog" aria-modal="true" aria-labelledby="repaso-modal-titulo">
+    <div class="modal-dialogo modal-dialogo--repaso">
+      <div class="modal-cabecera">
+        <div class="modal-cabecera__titulo-grupo">
+          <span class="modal-cabecera__icono" aria-hidden="true">📓</span>
+          <div>
+            <h2 id="repaso-modal-titulo" class="modal-cabecera__titulo">Libreta de Repaso — Inspección Visual</h2>
+            <p id="repaso-modal-subtitulo" class="modal-cabecera__subtitulo">Modo de solo lectura de 10 segundos</p>
+          </div>
+        </div>
+        <button id="btn-cerrar-repaso-x" class="boton-cerrar-modal" type="button" aria-label="Cerrar repaso">✕</button>
+      </div>
+
+      <div class="modal-cuerpo">
+        <!-- Selector previo de sala a repasar (Estudio o Vestíbulo) -->
+        <div id="repaso-selector-sala" class="repaso-selector-sala">
+          <p class="repaso-instruccion-previa">
+            Elige la sala que deseas reexaminar durante <strong>10 segundos</strong>. Los objetos serán visibles en sus posiciones para refrescar tu memoria visual, pero no podrás interactuar con ellos.
+          </p>
+          <div class="repaso-botones-salas" id="repaso-botones-salas">
+            <!-- Botones generados dinámicamente: Estudio / Vestíbulo -->
+          </div>
+        </div>
+
+        <!-- Vista activa de repaso con cronómetro de 10 segundos -->
+        <div id="repaso-vista-activa" class="repaso-vista-activa oculta">
+          <div class="barra-control-repaso">
+            <span id="repaso-nombre-sala-activa" class="repaso-etiqueta-sala">Sala en repaso</span>
+            <div class="caja-temporizador caja-temporizador--repaso" id="caja-temporizador-repaso" aria-live="polite">
+              <span class="temporizador__etiqueta">⏱️ Repaso:</span>
+              <span id="tiempo-restante-repaso" class="temporizador__numero">10s</span>
+              <div class="barra-tiempo" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10">
+                <div id="barra-tiempo-repaso-relleno" class="barra-tiempo__relleno barra-tiempo__relleno--repaso"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Escenario 2D en modo solo lectura con objetos visibles -->
+          <div id="escenario-repaso-2d" class="escenario-2d escenario-2d--repaso">
+            <div class="decorado-2d" aria-hidden="true">
+              <div class="decorado-2d__pared"></div>
+              <div class="decorado-2d__zocalo"></div>
+              <div class="decorado-2d__suelo"></div>
+            </div>
+            <!-- Capa con objetos fijos de solo lectura -->
+            <div id="capa-objetos-repaso" class="capa-objetos capa-objetos--repaso"></div>
+            <div class="insignia-solo-lectura">👁️ Solo lectura — Memoriza la escena</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-pie">
+        <button id="btn-cerrar-repaso" class="boton boton--secundario" type="button">
+          Volver al interrogatorio ↩️
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 2: AYUDA "¿CÓMO SE JUEGA?" (LAS 4 FASES)
+       ========================================================= -->
+  <div id="modal-ayuda" class="modal-superpuesto oculta" role="dialog" aria-modal="true" aria-labelledby="ayuda-modal-titulo">
+    <div class="modal-dialogo modal-dialogo--ayuda">
+      <div class="modal-cabecera">
+        <div class="modal-cabecera__titulo-grupo">
+          <span class="modal-cabecera__icono" aria-hidden="true">🕵️‍♂️</span>
+          <div>
+            <h2 id="ayuda-modal-titulo" class="modal-cabecera__titulo">¿Cómo se juega? — Manual del Detective</h2>
+            <p class="modal-cabecera__subtitulo">Guía oficial paso a paso de las 4 fases de "El Testigo Perfecto"</p>
+          </div>
+        </div>
+        <button id="btn-cerrar-ayuda-x" class="boton-cerrar-modal" type="button" aria-label="Cerrar manual de ayuda">✕</button>
+      </div>
+
+      <div class="modal-cuerpo">
+        <div class="guia-fases">
+          <!-- Fase 1 -->
+          <div class="tarjeta-guia-fase">
+            <div class="guia-fase__encabezado">
+              <span class="guia-fase__numero">1</span>
+              <h3>Fase de Observación</h3>
+            </div>
+            <p>
+              Inspecciona las 2 salas del crimen (<strong>Estudio</strong> y <strong>Vestíbulo</strong>). Dispones de exactamente <strong>30 segundos</strong> por sala para hacer clic en los objetos y memorizar sus nombres y ubicaciones. Al agotarse el cronómetro, la habitación se clausura y no podrás volver a entrar.
+            </p>
+          </div>
+
+          <!-- Fase 2 -->
+          <div class="tarjeta-guia-fase">
+            <div class="guia-fase__encabezado">
+              <span class="guia-fase__numero">2</span>
+              <h3>Libreta de Repaso (Opcional)</h3>
+            </div>
+            <p>
+              Durante los interrogatorios, tu libreta está bloqueada. Si dudas de tu memoria, puedes pulsar el botón <strong>📓 Libreta</strong> para volver a ver una sala durante <strong>10 segundos</strong> en modo de solo lectura. Tienes <strong>máximo 3 usos</strong> y cada uno <strong>resta 5 puntos</strong> de tu puntaje final.
+            </p>
+          </div>
+
+          <!-- Fase 3 -->
+          <div class="tarjeta-guia-fase">
+            <div class="guia-fase__encabezado">
+              <span class="guia-fase__numero">3</span>
+              <h3>Declaraciones y Deducción</h3>
+            </div>
+            <p>
+              Escucharás una a una las afirmaciones de los 3 sospechosos. Deberás responder <em>¿qué objeto de la escena contradice esta declaración?</em> eligiendo de memoria entre las opciones reales, falsos señuelos o <strong>«Ninguno, es coherente»</strong>. Cada acierto suma <strong>10 puntos</strong>.
+            </p>
+          </div>
+
+          <!-- Fase 4 -->
+          <div class="tarjeta-guia-fase">
+            <div class="guia-fase__encabezado">
+              <span class="guia-fase__numero">4</span>
+              <h3>Acusación Final y Rangos</h3>
+            </div>
+            <p>
+              Elige al verdadero culpable entre el Mayordomo, la Hija y el Socio. Si identificas al asesino correcto ganarás <strong>30 puntos</strong> adicionales. Al final, se evaluará tu puntaje neto para otorgarte un rango: <strong>Detective Novato</strong>, <strong>Detective Experto</strong> o <strong>Mente Maestra</strong>, y guardar tu mejor récord histórico.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-pie">
+        <button id="btn-cerrar-ayuda" class="boton boton--primario" type="button">
+          ¡Entendido, volver a la investigación!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="pie-pagina">
+    <p>El Testigo Perfecto — Juego Web 2D de Detectives (HTML5, CSS3 y JS Puro)</p>
+  </footer>
+
+  <!-- Lógica principal del juego -->
+  <script src="js/juego.js"></script>
+</body>
+</html>

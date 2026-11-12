@@ -1,0 +1,233 @@
+{
+  "id": "caso2",
+  "titulo": "El Robo del Zafiro Imperial",
+  "subtitulo": "Golpe Nocturno en el Museo Real",
+  "descripcion": "Durante la gala benéfica de medianoche, el legendario Zafiro Imperial desapareció de su vitrina blindada tras un apagón de dos minutos. Tienes 30 segundos por sala para inspeccionar la Sala de Exposiciones y el Despacho de Seguridad antes de que el museo sea desalojado.",
+  "tiempoPorSala": 30,
+  "salas": [
+    {
+      "id": "estudio",
+      "nombre": "Sala de Exposiciones",
+      "icono": "💎",
+      "descripcion": "El salón principal donde se exhibía el Zafiro Imperial bajo medidas de alta seguridad.",
+      "objetos": [
+        {
+          "id": "vitrina_intacta",
+          "nombre": "Vitrina abierta con llave magnética, sin cristales rotos",
+          "emoji": "🔲",
+          "imagen": "assets/objetos/vitrina_intacta.png",
+          "x": 50,
+          "y": 54
+        },
+        {
+          "id": "camara_pintada",
+          "nombre": "Cámara de vigilancia rociada con pintura en aerosol negra",
+          "emoji": "📹",
+          "imagen": "assets/objetos/camara_pintada.png",
+          "x": 20,
+          "y": 20
+        },
+        {
+          "id": "pañuelo_seda",
+          "nombre": "Pañuelo de seda con iniciales «C.V.» junto al pedestal",
+          "emoji": "🧣",
+          "imagen": "assets/objetos/pañuelo_seda.png",
+          "x": 58,
+          "y": 76
+        },
+        {
+          "id": "conducto_sellado",
+          "nombre": "Rejilla de ventilación atornillada y cubierta de polvo",
+          "emoji": "🎛️",
+          "imagen": "assets/objetos/conducto_sellado.png",
+          "x": 80,
+          "y": 22
+        },
+        {
+          "id": "copa_champan",
+          "nombre": "Copa de champán con carmín rojo en la mesa lateral",
+          "emoji": "🥂",
+          "imagen": "assets/objetos/copa_champan.png",
+          "x": 28,
+          "y": 62
+        },
+        {
+          "id": "catalogo_subasta",
+          "nombre": "Catálogo de subasta clandestina con el zafiro marcado",
+          "emoji": "📑",
+          "imagen": "assets/objetos/catalogo_subasta.png",
+          "x": 74,
+          "y": 60
+        }
+      ]
+    },
+    {
+      "id": "vestibulo",
+      "nombre": "Despacho de Seguridad",
+      "icono": "🖥️",
+      "descripcion": "El cuarto de control eléctrico y registro de tarjetas magnéticas del museo.",
+      "objetos": [
+        {
+          "id": "fusibles_bajados",
+          "nombre": "Palanca del cuadro eléctrico bajada manualmente",
+          "emoji": "⚡",
+          "imagen": "assets/objetos/fusibles_bajados.png",
+          "x": 18,
+          "y": 36
+        },
+        {
+          "id": "bote_aerosol",
+          "nombre": "Bote de pintura negra en aerosol oculto en la papelera",
+          "emoji": "🥫",
+          "imagen": "assets/objetos/bote_aerosol.png",
+          "x": 32,
+          "y": 78
+        },
+        {
+          "id": "registro_tarjetas",
+          "nombre": "Monitor con uso de tarjeta de la Curadora a las 23:58",
+          "emoji": "💻",
+          "imagen": "assets/objetos/registro_tarjetas.png",
+          "x": 54,
+          "y": 48
+        },
+        {
+          "id": "taza_cafe_frio",
+          "nombre": "Taza de café del guardia con restos de somnífero",
+          "emoji": "☕",
+          "imagen": "assets/objetos/taza_cafe_frio.png",
+          "x": 70,
+          "y": 54
+        },
+        {
+          "id": "llavero_guardia",
+          "nombre": "Llavero del guardia colgado intacto en su gancho",
+          "emoji": "🔑",
+          "imagen": "assets/objetos/llavero_guardia.png",
+          "x": 82,
+          "y": 32
+        },
+        {
+          "id": "maletin_doble_fondo",
+          "nombre": "Maletín de cuero de la Curadora con hueco acolchado",
+          "emoji": "💼",
+          "imagen": "assets/objetos/maletin_doble_fondo.png",
+          "x": 62,
+          "y": 80
+        }
+      ]
+    }
+  ],
+  "sospechosos": [
+    {
+      "id": "curadora",
+      "nombre": "Clara Valmont (Curadora)",
+      "rol": "Curadora jefe de la exposición",
+      "emoji": "👩‍💼",
+      "declaraciones": [
+        {
+          "id": "dec_cur_1",
+          "texto": "Olvidé mi tarjeta magnética en casa y no abrí ninguna puerta ni vitrina en toda la noche.",
+          "objetoContradice": "registro_tarjetas",
+          "explicacion": "El monitor del Despacho de Seguridad registró el acceso con la tarjeta magnética de la Curadora a las 23:58."
+        },
+        {
+          "id": "dec_cur_2",
+          "texto": "El ladrón tuvo que romper el cristal blindado de la vitrina a martillazos durante el apagón.",
+          "objetoContradice": "vitrina_intacta",
+          "explicacion": "La vitrina no tenía ningún cristal roto; fue abierta limpiamente con una llave magnética autorizada."
+        },
+        {
+          "id": "dec_cur_3",
+          "texto": "Yo misma organicé la recepción de invitados en el salón principal al inicio de la velada.",
+          "objetoContradice": null,
+          "explicacion": "Declaración coherente; como curadora jefe era la anfitriona del evento y ninguna pista lo contradice."
+        }
+      ]
+    },
+    {
+      "id": "guardia",
+      "nombre": "Marcos Roca (Guardia)",
+      "rol": "Vigilante nocturno del museo",
+      "emoji": "👮",
+      "declaraciones": [
+        {
+          "id": "dec_gua_1",
+          "texto": "El apagón se debió a una tormenta exterior; nadie tocó el cuadro eléctrico del despacho.",
+          "objetoContradice": "fusibles_bajados",
+          "explicacion": "La palanca del cuadro eléctrico en el Despacho de Seguridad había sido bajada manualmente desde dentro."
+        },
+        {
+          "id": "dec_gua_2",
+          "texto": "Las cámaras grabaron todo el salón sin interrupción porque tenían lentes limpias toda la noche.",
+          "objetoContradice": "camara_pintada",
+          "explicacion": "La cámara de vigilancia de la Sala de Exposiciones fue inutilizada con pintura negra en aerosol."
+        },
+        {
+          "id": "dec_gua_3",
+          "texto": "Me entró un sueño repentino después de beber mi café durante el turno de vigilancia.",
+          "objetoContradice": null,
+          "explicacion": "Declaración coherente; su taza de café efectivamente contenía restos de somnífero para dormirlo."
+        }
+      ]
+    },
+    {
+      "id": "coleccionista",
+      "nombre": "Víctor Sterling (Coleccionista)",
+      "rol": "Magnate e invitado de honor",
+      "emoji": "🎩",
+      "declaraciones": [
+        {
+          "id": "dec_col_1",
+          "texto": "Vi claramente cómo un acróbata escapaba arrastrándose por el conducto de ventilación del techo.",
+          "objetoContradice": "conducto_sellado",
+          "explicacion": "La rejilla del conducto de ventilación estaba atornillada y cubierta de polvo antiguo; nadie pasó por allí."
+        },
+        {
+          "id": "dec_col_2",
+          "texto": "Jamás he visto un catálogo de subastas ilegales ni nadie planeaba vender el zafiro esta noche.",
+          "objetoContradice": "catalogo_subasta",
+          "explicacion": "En la Sala de Exposiciones había un catálogo de subasta clandestina con el Zafiro Imperial señalado."
+        },
+        {
+          "id": "dec_col_3",
+          "texto": "Asistí a la gala benéfica invitado por la directiva del Museo Real.",
+          "objetoContradice": null,
+          "explicacion": "Declaración coherente; ningún objeto de la escena desmiente su asistencia como invitado a la gala."
+        }
+      ]
+    }
+  ],
+  "senuelos": [
+    {
+      "id": "senuelo_cuerda",
+      "nombre": "Cuerda de escalada colgando del tragaluz",
+      "emoji": "🪢",
+      "imagen": "assets/objetos/senuelo_cuerda.png"
+    },
+    {
+      "id": "senuelo_martillo",
+      "nombre": "Martillo de emergencia tirado junto al pedestal",
+      "emoji": "🔨",
+      "imagen": "assets/objetos/senuelo_martillo.png"
+    },
+    {
+      "id": "senuelo_mascara",
+      "nombre": "Máscara de terciopelo negro sobre el escritorio",
+      "emoji": "🎭",
+      "imagen": "assets/objetos/senuelo_mascara.png"
+    },
+    {
+      "id": "senuelo_linterna",
+      "nombre": "Linterna táctica encendida en el pasillo",
+      "emoji": "🔦",
+      "imagen": "assets/objetos/senuelo_linterna.png"
+    }
+  ],
+  "culpable": "curadora",
+  "puntos": {
+    "deduccionCorrecta": 10,
+    "acusacionCorrecta": 30
+  },
+  "solucion": "Clara Valmont (la Curadora) puso somnífero en el café del guardia, roció la cámara con aerosol negro y bajó la palanca del cuadro eléctrico. A las 23:58 usó su propia tarjeta magnética para abrir la vitrina sin romper el cristal, dejó caer su pañuelo con las iniciales «C.V.» y ocultó el Zafiro Imperial en su maletín de doble fondo para venderlo en una subasta clandestina."
+}

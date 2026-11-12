@@ -1,0 +1,1819 @@
+/* ==========================================================================
+   EL TESTIGO PERFECTO — Hoja de Estilos Principal (estilo.css)
+   Diseño 2D Noir de Detectives, Responsivo y sin Frameworks
+   ========================================================================== */
+
+/* 1. VARIABLES GLOBALES Y PALETA DE COLORES */
+:root {
+  --color-fondo: #0e1117;
+  --color-superficie: #171c26;
+  --color-superficie-clara: #212836;
+  --color-borde: #2f394d;
+  --color-acento: #e2b857;
+  --color-acento-brillo: #f5d17e;
+  --color-texto: #ebeef5;
+  --color-texto-secundario: #9ba5b8;
+  --color-peligro: #e05252;
+  --color-exito: #49b882;
+
+  /* Colores específicos de escenarios 2D */
+  --estudio-pared: #2c1d18;
+  --estudio-zocalo: #3d271d;
+  --estudio-suelo: #4a2126;
+
+  --vestibulo-pared: #1f2933;
+  --vestibulo-zocalo: #323f4b;
+  --vestibulo-suelo: #29333d;
+
+  --sombra-fuerte: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --radio-borde: 12px;
+  --transicion: 0.25s ease;
+}
+
+/* 2. RESETEO BÁSICO Y TIPOGRAFÍA */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top, #1b2230 0%, var(--color-fondo) 75%);
+  color: var(--color-texto);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+/* 3. CABECERA DEL JUEGO */
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background-color: rgba(14, 17, 23, 0.9);
+  border-bottom: 1px solid var(--color-borde);
+  backdrop-filter: blur(8px);
+}
+
+.cabecera__marca {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.cabecera__icono {
+  font-size: 2.2rem;
+}
+
+.cabecera__titulo {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-acento);
+  letter-spacing: 0.5px;
+}
+
+.cabecera__subtitulo {
+  font-size: 0.9rem;
+  color: var(--color-texto-secundario);
+}
+
+.cabecera__estado {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.insignia-fase {
+  background-color: rgba(226, 184, 87, 0.15);
+  color: var(--color-acento);
+  border: 1px solid rgba(226, 184, 87, 0.4);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.contador-salas {
+  background-color: var(--color-superficie-clara);
+  color: var(--color-texto);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  border: 1px solid var(--color-borde);
+}
+
+/* 4. CONTENEDOR PRINCIPAL Y SISTEMA DE PANTALLAS */
+.contenedor-principal {
+  flex: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.panel-pantalla {
+  display: none;
+  animation: aparecerSuave 0.35s ease;
+}
+
+.panel-pantalla.activa {
+  display: block;
+}
+
+@keyframes aparecerSuave {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 5. TARJETA DE EXPEDIENTE (INICIO Y RESUMEN) */
+.tarjeta-expediente {
+  position: relative;
+  max-width: 850px;
+  margin: 1rem auto;
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-top: 4px solid var(--color-acento);
+  border-radius: var(--radio-borde);
+  padding: 2.25rem;
+  box-shadow: var(--sombra-fuerte);
+}
+
+.sello-confidencial {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--color-peligro);
+  border: 2px solid var(--color-peligro);
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.sello-confidencial--completado {
+  color: var(--color-exito);
+  border-color: var(--color-exito);
+}
+
+.expediente__titulo {
+  font-size: 1.85rem;
+  color: var(--color-acento);
+  margin-bottom: 0.75rem;
+}
+
+.expediente__descripcion {
+  font-size: 1.05rem;
+  color: var(--color-texto);
+  margin-bottom: 1.5rem;
+}
+
+.reglas-observacion {
+  background-color: var(--color-superficie-clara);
+  border-left: 4px solid var(--color-acento);
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.75rem;
+}
+
+.reglas-observacion h3 {
+  font-size: 1.1rem;
+  color: var(--color-acento);
+  margin-bottom: 0.75rem;
+}
+
+.reglas-observacion ul {
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.5rem;
+  color: var(--color-texto-secundario);
+}
+
+.reglas-observacion strong {
+  color: var(--color-texto);
+}
+
+/* 6. BOTONES GENERALES */
+.acciones-centro {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.boton {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.85rem 1.75rem;
+  border-radius: 8px;
+  border: none;
+  transition: transform var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
+}
+
+.boton--primario {
+  background-color: var(--color-acento);
+  color: #11151c;
+  box-shadow: 0 4px 15px rgba(226, 184, 87, 0.3);
+}
+
+.boton--primario:hover {
+  background-color: var(--color-acento-brillo);
+  transform: translateY(-2px);
+}
+
+.boton--secundario {
+  background-color: var(--color-superficie-clara);
+  color: var(--color-acento);
+  border: 1px solid var(--color-acento);
+}
+
+.boton--secundario:hover {
+  background-color: rgba(226, 184, 87, 0.15);
+  transform: translateY(-2px);
+}
+
+/* 7. BARRA SUPERIOR DE OBSERVACIÓN: SELECTOR DE SALAS Y TEMPORIZADOR */
+.barra-control-observacion {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  align-items: stretch;
+}
+
+.selector-salas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+}
+
+.boton-sala {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radio-borde);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--color-borde);
+  color: var(--color-texto);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transicion);
+}
+
+.boton-sala:hover:not(:disabled) {
+  border-color: var(--color-acento);
+  background-color: var(--color-superficie-clara);
+}
+
+.boton-sala.activa {
+  border-color: var(--color-acento);
+  background-color: rgba(226, 184, 87, 0.12);
+  box-shadow: 0 0 18px rgba(226, 184, 87, 0.2);
+}
+
+.boton-sala.cerrada,
+.boton-sala:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-color: #3a2328;
+  background-color: #161317;
+}
+
+.boton-sala__encabezado {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.boton-sala__estado {
+  font-size: 0.78rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  background-color: var(--color-superficie-clara);
+  color: var(--color-texto-secundario);
+}
+
+.boton-sala.activa .boton-sala__estado {
+  background-color: var(--color-acento);
+  color: #11151c;
+  font-weight: 700;
+}
+
+.boton-sala.cerrada .boton-sala__estado {
+  background-color: rgba(224, 82, 82, 0.2);
+  color: var(--color-peligro);
+}
+
+/* Temporizador de 30 segundos */
+.caja-temporizador {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.temporizador__cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.temporizador__etiqueta {
+  font-size: 0.9rem;
+  color: var(--color-texto-secundario);
+}
+
+.temporizador__numero {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-acento);
+}
+
+.caja-temporizador.alerta .temporizador__numero {
+  color: var(--color-peligro);
+  animation: latidoAlerta 0.7s infinite alternate;
+}
+
+@keyframes latidoAlerta {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+
+.barra-tiempo {
+  width: 100%;
+  height: 10px;
+  background-color: #0d1016;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+}
+
+.barra-tiempo__relleno {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-exito), var(--color-acento));
+  transition: width 0.25s linear, background 0.25s ease;
+}
+
+.caja-temporizador.alerta .barra-tiempo__relleno {
+  background: var(--color-peligro);
+}
+
+/* 8. DISPOSICIÓN DEL ESCENARIO 2D Y LA LIBRETA */
+.disposicion-juego {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.columna-escenario {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Escenario 2D Interactivo */
+.escenario-2d {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 360px;
+  background-color: #12161f;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  overflow: hidden;
+  box-shadow: var(--sombra-fuerte);
+  user-select: none;
+}
+
+/* Decorado arquitectónico 2D de las habitaciones */
+.decorado-2d {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pared superior (62% de la altura) */
+.decorado-2d__pared {
+  height: 62%;
+  background: linear-gradient(180deg, #1b2230 0%, #252e40 100%);
+  position: relative;
+  transition: background 0.4s ease;
+}
+
+/* Zócalo / Moldura divisoria (4% de la altura) */
+.decorado-2d__zocalo {
+  height: 4%;
+  background-color: #364156;
+  border-top: 2px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  transition: background-color 0.4s ease;
+}
+
+/* Suelo en perspectiva 2D (34% de la altura) */
+.decorado-2d__suelo {
+  height: 34%;
+  background: repeating-linear-gradient(
+    90deg,
+    #1c2029 0px,
+    #1c2029 60px,
+    #171a22 60px,
+    #171a22 62px
+  );
+  transition: background 0.4s ease;
+}
+
+/* Ambientación específica para la Sala 1: Estudio del Sr. Valdés */
+.escenario-2d[data-sala="estudio"] .decorado-2d__pared {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 45px,
+      transparent 45px,
+      transparent 90px
+    ),
+    linear-gradient(180deg, #241714 0%, var(--estudio-pared) 100%);
+}
+
+.escenario-2d[data-sala="estudio"] .decorado-2d__zocalo {
+  background-color: var(--estudio-zocalo);
+}
+
+.escenario-2d[data-sala="estudio"] .decorado-2d__suelo {
+  background:
+    radial-gradient(ellipse at center, rgba(145, 42, 58, 0.45) 0%, transparent 70%),
+    repeating-linear-gradient(
+      90deg,
+      #331d19 0px,
+      #331d19 80px,
+      #291613 80px,
+      #291613 83px
+    );
+}
+
+/* Ambientación específica para la Sala 2: Vestíbulo Principal */
+.escenario-2d[data-sala="vestibulo"] .decorado-2d__pared {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 2px,
+      transparent 2px,
+      transparent 110px
+    ),
+    linear-gradient(180deg, #16202a 0%, var(--vestibulo-pared) 100%);
+}
+
+.escenario-2d[data-sala="vestibulo"] .decorado-2d__zocalo {
+  background-color: var(--vestibulo-zocalo);
+}
+
+.escenario-2d[data-sala="vestibulo"] .decorado-2d__suelo {
+  background:
+    repeating-conic-gradient(#26323d 0% 25%, #1d262f 0% 50%) 50% / 70px 70px;
+}
+
+.decorado-2d__rotulo {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  background-color: rgba(14, 17, 23, 0.78);
+  color: var(--color-acento);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid rgba(226, 184, 87, 0.35);
+}
+
+/* 9. CAPA DE OBJETOS INTERACTIVOS EN EL ESCENARIO 2D */
+.capa-objetos {
+  position: absolute;
+  inset: 0;
+}
+
+.objeto-escena {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(33, 40, 54, 0.92) 0%, rgba(18, 22, 31, 0.96) 100%);
+  border: 2px solid rgba(226, 184, 87, 0.65);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  z-index: 2;
+}
+
+.objeto-escena__emoji {
+  font-size: 1.85rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.objeto-escena:hover,
+.objeto-escena:focus-visible {
+  transform: translate(-50%, -50%) scale(1.16);
+  border-color: var(--color-acento-brillo);
+  box-shadow: 0 0 20px rgba(226, 184, 87, 0.55);
+  z-index: 10;
+  outline: none;
+}
+
+/* Estado cuando el objeto ya fue inspeccionado por el jugador */
+.objeto-escena.inspeccionado {
+  border-color: var(--color-exito);
+  background: radial-gradient(circle, rgba(28, 62, 48, 0.92) 0%, rgba(17, 35, 28, 0.96) 100%);
+}
+
+.objeto-escena.inspeccionado::after {
+  content: "✓";
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--color-exito);
+  color: #0d131a;
+  font-size: 0.75rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Etiqueta flotante con el nombre del objeto al hacer clic */
+.objeto-escena__etiqueta {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background-color: rgba(14, 17, 23, 0.96);
+  color: var(--color-acento-brillo);
+  border: 1px solid var(--color-acento);
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
+  z-index: 20;
+}
+
+.objeto-escena.mostrar-nombre .objeto-escena__etiqueta {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 10. VELO DE BLOQUEO DEL ESCENARIO (ANTES DE ENTRAR O SALA CERRADA) */
+.velo-escenario {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(11, 14, 20, 0.88);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.velo-escenario.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.velo-escenario__contenido {
+  max-width: 460px;
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  padding: 1.75rem;
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-fuerte);
+}
+
+.velo-escenario__icono {
+  font-size: 2.75rem;
+  display: block;
+  margin-bottom: 0.65rem;
+}
+
+.velo-escenario__titulo {
+  font-size: 1.3rem;
+  color: var(--color-acento);
+  margin-bottom: 0.5rem;
+}
+
+.velo-escenario__mensaje {
+  color: var(--color-texto-secundario);
+  font-size: 0.95rem;
+}
+
+/* Visor inferior del objeto seleccionado */
+.visor-objeto {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-left: 4px solid var(--color-acento);
+  border-radius: 8px;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.visor-objeto__etiqueta {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-texto-secundario);
+  font-weight: 700;
+}
+
+.visor-objeto__nombre {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-acento-brillo);
+}
+
+/* 11. LIBRETA DEL DETECTIVE (PANEL LATERAL) */
+.panel-libreta {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  padding: 1.25rem;
+  box-shadow: var(--sombra-fuerte);
+}
+
+.panel-libreta__titulo {
+  font-size: 1.15rem;
+  color: var(--color-acento);
+  margin-bottom: 0.4rem;
+}
+
+.panel-libreta__descripcion {
+  font-size: 0.88rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: 1rem;
+}
+
+.progreso-pistas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-superficie-clara);
+  padding: 0.55rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 0.9rem;
+}
+
+.progreso-pistas strong {
+  color: var(--color-acento);
+}
+
+.lista-pistas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 330px;
+  overflow-y: auto;
+}
+
+.lista-pistas__item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  padding: 0.55rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  animation: aparecerSuave 0.25s ease;
+}
+
+.lista-pistas__vacio {
+  color: var(--color-texto-secundario);
+  font-style: italic;
+  font-size: 0.88rem;
+  padding: 0.5rem 0;
+}
+
+/* 12. PANTALLA DE RESUMEN FINAL */
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.1rem;
+  margin-bottom: 1.75rem;
+}
+
+.tarjeta-resumen-sala {
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 1.1rem;
+}
+
+.tarjeta-resumen-sala h3 {
+  color: var(--color-acento);
+  font-size: 1.05rem;
+  margin-bottom: 0.65rem;
+}
+
+.tarjeta-resumen-sala ul {
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+}
+
+.seccion-sospechosos-previa {
+  border-top: 1px solid var(--color-borde);
+  padding-top: 1.35rem;
+}
+
+.seccion-sospechosos-previa h3 {
+  color: var(--color-acento);
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.texto-secundario {
+  font-size: 0.88rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: 1rem;
+}
+
+.sospechosos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.tarjeta-sospechoso {
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 0.9rem;
+  text-align: center;
+}
+
+.tarjeta-sospechoso__emoji {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.tarjeta-sospechoso__nombre {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--color-texto);
+}
+
+.tarjeta-sospechoso__rol {
+  font-size: 0.78rem;
+  color: var(--color-texto-secundario);
+  margin-top: 0.2rem;
+}
+
+/* 12-B. FASE DE DECLARACIONES, DEDUCCIÓN Y ACUSACIÓN (SPRINT 2) */
+.marcador-puntos {
+  border-color: rgba(226, 184, 87, 0.5);
+  color: var(--color-acento-brillo);
+  font-weight: 700;
+}
+
+.tarjeta-interrogatorio {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-top: 4px solid var(--color-acento);
+  border-radius: var(--radio-borde);
+  padding: 1.75rem;
+  box-shadow: var(--sombra-fuerte);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.interrogatorio__progreso {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.progreso-declaracion__texto {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.barra-progreso-declaraciones {
+  width: 100%;
+  height: 8px;
+  background-color: #0d1016;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+}
+
+.barra-progreso-declaraciones__relleno {
+  width: 11%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-acento), var(--color-acento-brillo));
+  transition: width 0.3s ease;
+}
+
+.ficha-declarante {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.1rem;
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+}
+
+.ficha-declarante__emoji {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.ficha-declarante__nombre {
+  font-size: 1.25rem;
+  color: var(--color-acento);
+}
+
+.ficha-declarante__rol {
+  font-size: 0.88rem;
+  color: var(--color-texto-secundario);
+}
+
+.cita-declaracion {
+  position: relative;
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--color-texto);
+  background-color: rgba(14, 17, 23, 0.65);
+  border-left: 4px solid var(--color-acento);
+  padding: 1.15rem 1.35rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.bloque-deduccion__pregunta {
+  font-size: 1.05rem;
+  color: var(--color-acento-brillo);
+  margin-bottom: 0.25rem;
+}
+
+.bloque-deduccion__instruccion {
+  font-size: 0.88rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: 1rem;
+}
+
+.opciones-deduccion {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.boton-opcion-deduccion {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1.1rem;
+  border-radius: 8px;
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
+  font-family: inherit;
+  font-size: 0.96rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicion);
+}
+
+.boton-opcion-deduccion:hover:not(:disabled) {
+  border-color: var(--color-acento);
+  background-color: rgba(226, 184, 87, 0.12);
+  transform: translateX(4px);
+}
+
+.boton-opcion-deduccion:disabled {
+  cursor: default;
+}
+
+.boton-opcion-deduccion.correcta {
+  border-color: var(--color-exito);
+  background-color: rgba(73, 184, 130, 0.18);
+  color: #b7f5d8;
+}
+
+.boton-opcion-deduccion.incorrecta {
+  border-color: var(--color-peligro);
+  background-color: rgba(224, 82, 82, 0.18);
+  color: #f7baba;
+}
+
+.caja-retroalimentacion {
+  padding: 1.15rem 1.35rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  background-color: var(--color-superficie-clara);
+  animation: aparecerSuave 0.25s ease;
+}
+
+.caja-retroalimentacion.oculta {
+  display: none;
+}
+
+.caja-retroalimentacion.es-correcta {
+  border-left: 4px solid var(--color-exito);
+  background-color: rgba(73, 184, 130, 0.1);
+}
+
+.caja-retroalimentacion.es-incorrecta {
+  border-left: 4px solid var(--color-peligro);
+  background-color: rgba(224, 82, 82, 0.1);
+}
+
+.retro__titulo {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.caja-retroalimentacion.es-correcta .retro__titulo {
+  color: var(--color-exito);
+}
+
+.caja-retroalimentacion.es-incorrecta .retro__titulo {
+  color: var(--color-peligro);
+}
+
+.retro__explicacion {
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  margin-bottom: 1rem;
+}
+
+.retro__acciones {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Libreta sellada durante la fase de declaraciones */
+.panel-libreta--sellada {
+  border-color: rgba(226, 184, 87, 0.35);
+}
+
+.aviso-memoria {
+  background-color: rgba(14, 17, 23, 0.75);
+  border: 1px dashed var(--color-acento);
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  margin: 0.75rem 0 1.15rem;
+}
+
+.aviso-memoria__icono {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.aviso-memoria__titulo {
+  font-size: 1rem;
+  color: var(--color-acento);
+  margin-bottom: 0.4rem;
+}
+
+.aviso-memoria__texto {
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+}
+
+.resumen-interrogatorio-lateral {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.dato-lateral {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-superficie-clara);
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.dato-lateral strong {
+  color: var(--color-acento-brillo);
+}
+
+/* Tarjetas de Acusación */
+.acusacion-grid {
+  margin-top: 1.5rem;
+  gap: 1.15rem;
+}
+
+.tarjeta-acusacion {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.35rem;
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  text-align: center;
+  transition: transform var(--transicion), border-color var(--transicion);
+}
+
+.tarjeta-acusacion:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-acento);
+}
+
+/* Pantalla Final: Puntaje y Solución */
+.panel-puntaje-final {
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  padding: 1.35rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.puntaje-final__total {
+  display: flex;
+  flex-direction: column;
+}
+
+.puntaje-final__etiqueta {
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.puntaje-final__numero {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--color-acento-brillo);
+}
+
+.puntaje-final__desglose {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--color-texto-secundario);
+}
+
+.caja-solucion-caso {
+  background-color: rgba(14, 17, 23, 0.7);
+  border-left: 4px solid var(--color-acento);
+  border-radius: 8px;
+  padding: 1.35rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.caja-solucion-caso h3 {
+  color: var(--color-acento);
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+.caja-solucion-caso p {
+  color: var(--color-texto);
+  font-size: 0.98rem;
+}
+
+/* 12-C. SPRINT 3: LIBRETA DE REPASO, RANGOS, AYUDA Y PULIDO VISUAL */
+
+/* Botón de ayuda en la cabecera */
+.boton--ayuda {
+  background-color: transparent;
+  color: var(--color-acento-brillo);
+  border: 1px solid rgba(226, 184, 87, 0.4);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicion);
+}
+
+.boton--ayuda:hover {
+  background-color: rgba(226, 184, 87, 0.15);
+  border-color: var(--color-acento);
+  transform: translateY(-1px);
+}
+
+/* Récord histórico en la pantalla de inicio */
+.caja-record-inicio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background-color: rgba(226, 184, 87, 0.08);
+  border: 1px solid rgba(226, 184, 87, 0.25);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.92rem;
+  color: var(--color-acento-brillo);
+  font-weight: 600;
+}
+
+.icono-trofeo,
+.icono-record {
+  font-size: 1.25rem;
+}
+
+/* Módulo de Repaso de Libreta en el panel lateral */
+.modulo-repaso-libreta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  background-color: rgba(14, 17, 23, 0.5);
+  border: 1px solid rgba(226, 184, 87, 0.25);
+  border-radius: 8px;
+  padding: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.boton--repaso {
+  background: linear-gradient(135deg, #2b394e 0%, #1a2230 100%);
+  color: var(--color-acento-brillo);
+  border: 1px solid var(--color-acento);
+  padding: 0.65rem 1rem;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transicion);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.boton--repaso:hover:not(:disabled) {
+  background: linear-gradient(135deg, #374a66 0%, #222d40 100%);
+  border-color: var(--color-acento-brillo);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(226, 184, 87, 0.25);
+}
+
+.boton--repaso:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: var(--color-borde);
+  box-shadow: none;
+}
+
+.contador-repaso-caja {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.contador-repaso-texto {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-acento);
+}
+
+.costo-repaso-texto {
+  font-size: 0.72rem;
+  color: #e09393;
+}
+
+.texto-micro-repaso {
+  font-size: 0.76rem;
+  color: var(--color-texto-secundario);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Modales superpuestos universales */
+.modal-superpuesto {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(7, 9, 13, 0.82);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  animation: aparecerSuave 0.25s ease;
+}
+
+.modal-superpuesto.oculta {
+  display: none;
+}
+
+.modal-dialogo {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-top: 4px solid var(--color-acento);
+  border-radius: var(--radio-borde);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+.modal-dialogo--repaso {
+  max-width: 860px;
+}
+
+.modal-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 1.4rem;
+  background-color: rgba(14, 17, 23, 0.75);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.modal-cabecera__titulo-grupo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modal-cabecera__icono {
+  font-size: 1.85rem;
+}
+
+.modal-cabecera__titulo {
+  font-size: 1.2rem;
+  color: var(--color-acento);
+}
+
+.modal-cabecera__subtitulo {
+  font-size: 0.82rem;
+  color: var(--color-texto-secundario);
+}
+
+.boton-cerrar-modal {
+  background: transparent;
+  border: none;
+  color: var(--color-texto-secundario);
+  font-size: 1.35rem;
+  cursor: pointer;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  transition: all var(--transicion);
+}
+
+.boton-cerrar-modal:hover {
+  color: var(--color-peligro);
+  background-color: rgba(224, 82, 82, 0.15);
+}
+
+.modal-cuerpo {
+  padding: 1.35rem 1.4rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-pie {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.9rem 1.4rem;
+  background-color: rgba(14, 17, 23, 0.75);
+  border-top: 1px solid var(--color-borde);
+}
+
+/* Vista y selector de sala en Repaso */
+.repaso-selector-sala {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  text-align: center;
+}
+
+.repaso-instruccion-previa {
+  font-size: 0.96rem;
+  color: var(--color-texto);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.repaso-botones-salas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.boton-elegir-repaso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.35rem 1rem;
+  background-color: var(--color-superficie-clara);
+  border: 2px solid var(--color-borde);
+  border-radius: 10px;
+  color: var(--color-texto);
+  cursor: pointer;
+  transition: all var(--transicion);
+  font-family: inherit;
+}
+
+.boton-elegir-repaso:hover {
+  border-color: var(--color-acento);
+  background-color: rgba(226, 184, 87, 0.1);
+  transform: translateY(-2px);
+}
+
+.boton-elegir-repaso__icono {
+  font-size: 2.2rem;
+}
+
+.boton-elegir-repaso__nombre {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-acento);
+}
+
+.boton-elegir-repaso__desc {
+  font-size: 0.82rem;
+  color: var(--color-texto-secundario);
+}
+
+.repaso-vista-activa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.repaso-vista-activa.oculta {
+  display: none;
+}
+
+.barra-control-repaso {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.repaso-etiqueta-sala {
+  font-weight: 700;
+  color: var(--color-acento-brillo);
+  font-size: 1rem;
+}
+
+.caja-temporizador--repaso {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  min-width: 240px;
+}
+
+.barra-tiempo__relleno--repaso {
+  background: linear-gradient(90deg, #5b92e5, var(--color-acento));
+}
+
+.escenario-2d--repaso {
+  pointer-events: none; /* Modo solo lectura absoluto */
+  box-shadow: 0 0 24px rgba(226, 184, 87, 0.2);
+}
+
+/* Objeto en modo de solo lectura con etiqueta siempre visible */
+.objeto-escena--repaso {
+  cursor: default;
+  pointer-events: none;
+}
+
+.objeto-escena--repaso .objeto-escena__etiqueta {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  background-color: rgba(14, 17, 23, 0.92);
+  border-color: var(--color-acento);
+  font-size: 0.76rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.insignia-solo-lectura {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background-color: rgba(224, 82, 82, 0.85);
+  color: #ffffff;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Guía de las 4 fases en el modal de Ayuda */
+.guia-fases {
+  display: grid;
+  gap: 1rem;
+}
+
+.tarjeta-guia-fase {
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 1rem 1.15rem;
+}
+
+.guia-fase__encabezado {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.45rem;
+}
+
+.guia-fase__numero {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: var(--color-acento);
+  color: #0e1117;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.guia-fase__encabezado h3 {
+  font-size: 1.05rem;
+  color: var(--color-acento);
+}
+
+.tarjeta-guia-fase p {
+  font-size: 0.9rem;
+  color: var(--color-texto);
+  line-height: 1.45;
+}
+
+/* Tarjeta de Rango en la Pantalla Final */
+.tarjeta-rango {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--color-superficie-clara);
+  border: 2px solid var(--color-acento);
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(226, 184, 87, 0.2);
+}
+
+.tarjeta-rango__insignia {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.tarjeta-rango__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tarjeta-rango__subtitulo {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-texto-secundario);
+  font-weight: 700;
+}
+
+.tarjeta-rango__titulo {
+  font-size: 1.6rem;
+  color: var(--color-acento-brillo);
+}
+
+.tarjeta-rango__descripcion {
+  font-size: 0.92rem;
+  color: var(--color-texto);
+}
+
+.tarjeta-rango--maestra {
+  border-color: #f5d17e;
+  box-shadow: 0 0 28px rgba(245, 209, 126, 0.4);
+}
+
+.tarjeta-rango--experto {
+  border-color: #5b92e5;
+  box-shadow: 0 0 24px rgba(91, 146, 229, 0.35);
+}
+
+.tarjeta-rango--novato {
+  border-color: #9ba5b8;
+  box-shadow: 0 0 18px rgba(155, 165, 184, 0.2);
+}
+
+/* Récord final destacado */
+.record-final-destacado {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--color-acento);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Efectos visuales al acertar y al fallar (Pulido Visual) */
+.efecto-acierto {
+  animation: pulsoAcierto 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes pulsoAcierto {
+  0% {
+    box-shadow: 0 0 0 0 rgba(73, 184, 130, 0.85);
+  }
+  50% {
+    box-shadow: 0 0 32px 8px rgba(73, 184, 130, 0.6);
+  }
+  100% {
+    box-shadow: var(--sombra-fuerte);
+  }
+}
+
+.efecto-fallo {
+  animation: sacudidaFallo 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes sacudidaFallo {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  15%, 45%, 75% {
+    transform: translate3d(-6px, 0, 0);
+    box-shadow: 0 0 28px 6px rgba(224, 82, 82, 0.6);
+  }
+  30%, 60%, 90% {
+    transform: translate3d(6px, 0, 0);
+  }
+}
+
+/* 12-D. SELECCIÓN DE CASOS E IMÁGENES DE OBJETOS CON RESPALDO EMOJI */
+.casos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.tarjeta-caso {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--color-superficie-clara);
+  border: 1px solid var(--color-borde);
+  border-left: 4px solid var(--color-acento);
+  border-radius: var(--radio-borde);
+  padding: 1.35rem;
+  transition: transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.tarjeta-caso:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-acento-brillo);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+}
+
+.tarjeta-caso__titulo {
+  font-size: 1.25rem;
+  color: var(--color-acento);
+  margin-bottom: 0.45rem;
+}
+
+.tarjeta-caso__descripcion {
+  font-size: 0.92rem;
+  color: var(--color-texto);
+  line-height: 1.45;
+}
+
+.tarjeta-caso__pie {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.tarjeta-caso__record {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-acento-brillo);
+  background-color: rgba(14, 17, 23, 0.55);
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid rgba(226, 184, 87, 0.25);
+}
+
+.acciones-dobles {
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Imágenes de objetos (con respaldo automático a emoji si no existe el PNG) */
+.objeto-escena__imagen {
+  width: 100%;
+  height: 100%;
+  max-width: 42px;
+  max-height: 42px;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.55));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.objeto-escena:hover .objeto-escena__imagen,
+.objeto-escena:focus-visible .objeto-escena__imagen {
+  transform: scale(1.1);
+  filter: drop-shadow(0 3px 8px rgba(226, 184, 87, 0.5));
+}
+
+.icono-objeto-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.icono-objeto-img-inline {
+  width: 32px;
+  height: 32px;
+  max-width: 36px;
+  max-height: 36px;
+  object-fit: contain;
+  vertical-align: middle;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.boton-opcion-deduccion:hover:not(:disabled) .icono-objeto-img-inline,
+.lista-pistas__item:hover .icono-objeto-img-inline {
+  transform: scale(1.14);
+  filter: drop-shadow(0 2px 6px rgba(226, 184, 87, 0.45));
+}
+
+/* 13. PIE DE PÁGINA */
+.pie-pagina {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.82rem;
+  color: var(--color-texto-secundario);
+  border-top: 1px solid var(--color-borde);
+  background-color: rgba(14, 17, 23, 0.85);
+}
+
+/* 14. DISEÑO RESPONSIVO (TABLETS Y MÓVILES) */
+@media (max-width: 960px) {
+  .barra-control-observacion {
+    grid-template-columns: 1fr;
+  }
+
+  .disposicion-juego {
+    grid-template-columns: 1fr;
+  }
+
+  .resumen-grid,
+  .sospechosos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .cabecera {
+    padding: 0.85rem 1rem;
+  }
+
+  .contenedor-principal {
+    padding: 1rem;
+  }
+
+  .tarjeta-expediente {
+    padding: 1.35rem;
+  }
+
+  .selector-salas {
+    grid-template-columns: 1fr;
+  }
+
+  .escenario-2d {
+    aspect-ratio: 4 / 3;
+    min-height: 290px;
+  }
+
+  .objeto-escena {
+    width: 46px;
+    height: 46px;
+  }
+
+  .objeto-escena__imagen {
+    max-width: 32px;
+    max-height: 32px;
+  }
+
+  .objeto-escena__emoji {
+    font-size: 1.45rem;
+  }
+
+  .objeto-escena__etiqueta {
+    font-size: 0.72rem;
+    max-width: 190px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .repaso-botones-salas {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-dialogo {
+    max-height: 94vh;
+  }
+
+  .modal-cabecera,
+  .modal-cuerpo,
+  .modal-pie {
+    padding: 0.9rem 1rem;
+  }
+
+  .tarjeta-rango {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+}

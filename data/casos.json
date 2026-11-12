@@ -1,0 +1,16 @@
+[
+  {
+    "id": "caso1",
+    "titulo": "El Caso del Sr. Valdés",
+    "descripcion": "El empresario D. Héctor Valdés ha sido hallado sin vida en su mansión durante una noche de tormenta. Inspecciona el estudio y el vestíbulo para descubrir quién miente.",
+    "descripcionCorta": "El empresario D. Héctor Valdés ha sido hallado sin vida en su mansión durante una noche de tormenta. Inspecciona el estudio y el vestíbulo para descubrir quién miente.",
+    "ruta": "data/casos/caso1.json"
+  },
+  {
+    "id": "caso2",
+    "titulo": "El Robo del Zafiro Imperial",
+    "descripcion": "Durante la gala de medianoche en el Museo Real, el Zafiro Imperial desapareció tras un apagón de dos minutos. Examina la sala de exposiciones y el despacho de seguridad.",
+    "descripcionCorta": "Durante la gala de medianoche en el Museo Real, el Zafiro Imperial desapareció tras un apagón de dos minutos. Examina la sala de exposiciones y el despacho de seguridad.",
+    "ruta": "data/casos/caso2.json"
+  }
+]

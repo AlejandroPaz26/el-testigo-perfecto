@@ -1,0 +1,47 @@
+===========================================================================
+EL TESTIGO PERFECTO — Guía de Imágenes de Objetos (/assets/objetos/)
+===========================================================================
+
+CÓMO AGREGAR IMÁGENES PERSONALIZADAS PARA LOS OBJETOS:
+
+1. Formato y nombre del archivo:
+   Cada imagen debe guardarse en esta carpeta (/assets/objetos/) en formato PNG
+   y debe llamarse exactamente igual que el "id" del objeto en el archivo JSON
+   del caso correspondiente:
+
+       <id_del_objeto>.png
+
+2. Ejemplos para el Caso 1 (El Caso del Sr. Valdés - data/casos/caso1.json):
+   - Estudio:
+     * reloj_roto.png
+     * ventana_cerrada.png
+     * caja_fuerte.png
+     * taza_te.png
+     * testamento.png
+     * cenicero_puro.png
+     * alfombra_manchada.png
+
+   - Vestíbulo:
+     * paraguas_mojado.png
+     * abrigo_seco.png
+     * libro_visitas.png
+     * telefono_cortado.png
+     * huellas_barro.png
+     * llave_maestra.png
+
+   - Señuelos:
+     * senuelo_revolver.png
+     * senuelo_copa_vino.png
+     * senuelo_carta_chantaje.png
+     * senuelo_candelabro.png
+     * senuelo_guantes.png
+     * senuelo_frasco.png
+
+3. Funcionamiento en el juego:
+   Cada objeto del JSON puede incluir el campo opcional "imagen" apuntando a
+   "assets/objetos/<id>.png".
+   - Si el archivo PNG existe en esta carpeta y carga correctamente, el juego
+     mostrará la imagen en las salas 2D, en la libreta, en el modo repaso y en
+     las opciones de deducción.
+   - Si el archivo PNG no existe o no puede cargarse, el juego mostrará
+     automáticamente el "emoji" del objeto como respaldo sin romper la interfaz.
